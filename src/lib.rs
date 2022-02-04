@@ -7,6 +7,7 @@ use std::{
 
 use parking_lot::Mutex;
 
+#[derive(Debug)]
 pub struct Pool<T> {
     values: Mutex<Vec<T>>,
     max_size: usize,
@@ -37,6 +38,7 @@ where
     }
 }
 
+#[derive(Debug)]
 pub struct PoolObjectContainer<T: Clear> {
     inner: ManuallyDrop<T>,
     ref_pool: Arc<Pool<T>>,
