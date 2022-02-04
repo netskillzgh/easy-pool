@@ -1,5 +1,6 @@
 use parking_lot::Mutex;
-pub mod pool_queue;
+pub mod pool_array_queue;
+pub mod pool_seg_queue;
 use std::{
     fmt::Debug,
     mem::ManuallyDrop,
