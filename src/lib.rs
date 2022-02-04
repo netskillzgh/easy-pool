@@ -1,3 +1,7 @@
+#![cfg_attr(docsrs, feature(doc_cfg))]
+#![cfg_attr(docsrs, allow(unused_attributes))]
+#![doc = include_str!("../README.md")]
+
 use std::{
     mem::ManuallyDrop,
     ops::{Deref, DerefMut},
@@ -5,13 +9,13 @@ use std::{
     sync::Arc,
 };
 
-use crate::{
-    pool_array_queue::PoolArrayQueue, pool_mutex::PoolMutex, pool_seg_queue::PoolSegQueue,
-};
+pub use pool_array_queue::PoolArrayQueue;
+pub use pool_mutex::PoolMutex;
+pub use pool_seg_queue::PoolSegQueue;
 
-pub mod pool_array_queue;
-pub mod pool_mutex;
-pub mod pool_seg_queue;
+mod pool_array_queue;
+mod pool_mutex;
+mod pool_seg_queue;
 
 pub trait Clear {
     fn clear(&mut self);
