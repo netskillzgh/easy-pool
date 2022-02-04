@@ -1,4 +1,5 @@
 use std::{
+    fmt::Debug,
     mem::ManuallyDrop,
     ops::{Deref, DerefMut},
     ptr,
@@ -80,6 +81,12 @@ impl<T: Clear> Drop for PoolObjectContainer<T> {
             val.clear();
             lock.push(val);
         }
+    }
+}
+
+impl<T: Default + Clear> Default for Pool<T> {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
