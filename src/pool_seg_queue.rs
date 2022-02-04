@@ -14,22 +14,24 @@ impl<T> PoolSegQueue<T>
 where
     T: Default + Clear,
 {
-    pub fn new() -> Self {
-        Self::with_config(4096)
-    }
-
-    pub fn with_config(max_size: usize) -> Self {
+    pub fn new(max_size: usize) -> Self {
         Self {
             values: SegQueue::new(),
             max_size,
         }
     }
 
+    #[inline]
     pub fn create(self: &Arc<Self>) -> PoolObjectContainer<T> {
-        let val = self.values.pop().unwrap_or_default();
+        self.create_with(|| Default::default())
+    }
+
+    pub fn create_with<F: FnOnce() -> T>(self: &Arc<Self>, f: F) -> PoolObjectContainer<T> {
+        let val = self.values.pop().unwrap_or_else(f);
         PoolObjectContainer::new(val, PoolType::SegQueue(Arc::clone(&self)))
     }
 
+    #[inline]
     pub fn len(&self) -> usize {
         self.values.len()
     }
@@ -37,7 +39,7 @@ where
 
 impl<T: Default + Clear> Default for PoolSegQueue<T> {
     fn default() -> Self {
-        Self::new()
+        Self::new(1024)
     }
 }
 
@@ -47,7 +49,7 @@ mod tests {
 
     #[test]
     fn test() {
-        let pool = Arc::new(PoolSegQueue::<Vec<u8>>::new());
+        let pool = Arc::new(PoolSegQueue::<Vec<u8>>::new(1024));
         let mut new_vec = pool.create();
         new_vec.extend_from_slice(&[0, 0, 0, 0, 1, 1]);
         let capacity = new_vec.capacity();

@@ -21,11 +21,17 @@ where
         }
     }
 
+    #[inline]
     pub fn create(self: &Arc<Self>) -> PoolObjectContainer<T> {
-        let val = self.values.pop().unwrap_or_default();
+        self.create_with(|| Default::default())
+    }
+
+    pub fn create_with<F: FnOnce() -> T>(self: &Arc<Self>, f: F) -> PoolObjectContainer<T> {
+        let val = self.values.pop().unwrap_or_else(f);
         PoolObjectContainer::new(val, PoolType::ArrayQueue(Arc::clone(&self)))
     }
 
+    #[inline]
     pub fn len(&self) -> usize {
         self.values.len()
     }
@@ -33,7 +39,7 @@ where
 
 impl<T: Default + Clear> Default for PoolArrayQueue<T> {
     fn default() -> Self {
-        Self::new(4096)
+        Self::new(1024)
     }
 }
 
@@ -43,7 +49,7 @@ mod tests {
 
     #[test]
     fn test() {
-        let pool = Arc::new(PoolArrayQueue::<Vec<u8>>::new(4096));
+        let pool = Arc::new(PoolArrayQueue::<Vec<u8>>::new(1024));
         let mut new_vec = pool.create();
         new_vec.extend_from_slice(&[0, 0, 0, 0, 1, 1]);
         let capacity = new_vec.capacity();

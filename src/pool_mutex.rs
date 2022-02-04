@@ -25,11 +25,17 @@ where
         }
     }
 
+    #[inline]
     pub fn create(self: &Arc<Self>) -> PoolObjectContainer<T> {
-        let val = self.values.lock().pop().unwrap_or_default();
+        self.create_with(|| Default::default())
+    }
+
+    pub fn create_with<F: FnOnce() -> T>(self: &Arc<Self>, f: F) -> PoolObjectContainer<T> {
+        let val = self.values.lock().pop().unwrap_or_else(f);
         PoolObjectContainer::new(val, PoolType::Mutex(Arc::clone(&self)))
     }
 
+    #[inline]
     pub fn len(&self) -> usize {
         self.values.lock().len()
     }
