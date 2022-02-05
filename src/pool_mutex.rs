@@ -77,6 +77,7 @@ impl Clear for String {
 impl<T> Clear for Vec<T> {
     #[inline]
     fn clear(&mut self) {
-        self.clear()
+        self.clear();
+        debug_assert!(self.is_empty());
     }
 }
