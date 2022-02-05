@@ -5,9 +5,11 @@ easy-pool = "0.1.0"
 
 Pools : 
 
-<a href="https://docs.rs/easy-pool/0.1.0/easy_pool/pool_array_queue/struct.PoolArrayQueue.html">PoolArrayQueue</a>
-<a href="https://docs.rs/easy-pool/0.1.0/easy_pool/pool_mutex/struct.PoolMutex.html">PoolMutex</a>
-<a href="https://docs.rs/easy-pool/0.1.0/easy_pool/pool_seg_queue/struct.PoolSegQueue.html">PoolSegQueue</a>
+- [PoolArrayQueue](https://docs.rs/easy-pool/0.1.0/easy_pool/pool_array_queue/struct.PoolArrayQueue.html)
+- [PoolMutex](https://docs.rs/easy-pool/0.1.0/easy_pool/pool_mutex/struct.PoolMutex.html)
+- [PoolSegQueue](https://docs.rs/easy-pool/0.1.0/easy_pool/pool_seg_queue/struct.PoolSegQueue.html)
+
+<hr>
 
 ## Simple example
 
@@ -18,5 +20,5 @@ Pools :
     let pool = Arc::new(PoolMutex::<Vec<u8>>::new());
     let val = pool.create_with(|| Vec::with_capacity(1024));
     drop(val);
-      // return to the pool
+    // return to the pool
 ```
