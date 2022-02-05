@@ -70,14 +70,14 @@ mod tests {
     fn test_create_with() {
         let pool = Arc::new(PoolMutex::<Vec<u8>>::new());
         let r = pool.create_with(|| Vec::with_capacity(4096));
-        debug_assert_eq!(r.capacity(), 4096);
+        assert_eq!(r.capacity(), 4096);
     }
 
     #[test]
     fn test_create() {
         let pool = Arc::new(PoolMutex::<Vec<u8>>::new());
         let r = pool.create();
-        debug_assert_eq!(r.capacity(), Vec::<u8>::default().capacity());
+        assert_eq!(r.capacity(), Vec::<u8>::default().capacity());
     }
 
     #[test]

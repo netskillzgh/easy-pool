@@ -95,3 +95,32 @@ impl<T: Clear> Drop for PoolObjectContainer<T> {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_clear() {
+        let pool = Arc::new(PoolMutex::new());
+        let vec = pool.create_with(|| vec![10]);
+        drop(vec);
+        assert_eq!(pool.len(), 1);
+        let vec = pool.create();
+        assert!(vec.capacity() == 1 && vec.is_empty());
+
+        let pool = Arc::new(PoolSegQueue::new(1024));
+        let vec = pool.create_with(|| vec![10]);
+        drop(vec);
+        assert_eq!(pool.len(), 1);
+        let vec = pool.create();
+        assert!(vec.capacity() == 1 && vec.is_empty());
+
+        let pool = Arc::new(PoolArrayQueue::new(1024));
+        let vec = pool.create_with(|| vec![10]);
+        drop(vec);
+        assert_eq!(pool.len(), 1);
+        let vec = pool.create();
+        assert!(vec.capacity() == 1 && vec.is_empty());
+    }
+}
