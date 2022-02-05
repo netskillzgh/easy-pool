@@ -61,4 +61,27 @@ mod tests {
         assert!(pool.values.is_empty());
         drop(new_vec);
     }
+
+    #[test]
+    fn test_create_with() {
+        let pool = Arc::new(PoolArrayQueue::<Vec<u8>>::new(1024));
+        let r = pool.create_with(|| Vec::with_capacity(4096));
+        debug_assert_eq!(r.capacity(), 4096);
+    }
+
+    #[test]
+    fn test_create() {
+        let pool = Arc::new(PoolArrayQueue::<Vec<u8>>::new(1024));
+        let r = pool.create();
+        debug_assert_eq!(r.capacity(), Vec::<u8>::default().capacity());
+    }
+
+    #[test]
+    fn test_len() {
+        let pool = Arc::new(PoolArrayQueue::<Vec<u8>>::new(1024));
+        assert_eq!(pool.len(), 0);
+        let new_vec = pool.create();
+        drop(new_vec);
+        assert_eq!(pool.len(), 1);
+    }
 }
