@@ -18,7 +18,7 @@ fn mutex(pool: Arc<PoolMutex<Vec<u8>>>) {
     });
 }
 
-fn sequeue(pool: Arc<PoolSegQueue<Vec<u8>>>) {
+fn seg_queue(pool: Arc<PoolSegQueue<Vec<u8>>>) {
     (0..1024).into_par_iter().for_each(|_| {
         let pool = pool.clone();
         let vec = pool.create_with(|| Vec::with_capacity(1024));
@@ -48,10 +48,12 @@ fn array_queue(pool: Arc<PoolArrayQueue<Vec<u8>>>) {
 
 fn criterion_benchmark(c: &mut Criterion) {
     let pool = Arc::new(PoolMutex::with_config(1024, 1024));
-    c.bench_function("Mutex", |b| b.iter(|| mutex(black_box(pool.clone()))));
+    c.bench_function("mutex", |b| b.iter(|| mutex(black_box(pool.clone()))));
 
     let pool = Arc::new(PoolSegQueue::new(1024));
-    c.bench_function("SegQueue", |b| b.iter(|| sequeue(black_box(pool.clone()))));
+    c.bench_function("seg_queue", |b| {
+        b.iter(|| seg_queue(black_box(pool.clone())))
+    });
 
     let pool = Arc::new(PoolArrayQueue::new(1024));
     c.bench_function("array_queue", |b| {

@@ -14,11 +14,11 @@ Pools :
 ## Simple example
 
 ```rust, no_run
-    use easy_pool::PoolMutex;
-    use std::sync::Arc;
+use easy_pool::PoolMutex;
+use std::sync::Arc;
 
-    let pool = Arc::new(PoolMutex::<Vec<u8>>::new());
-    let val = pool.create_with(|| Vec::with_capacity(1024));
-    drop(val);
-    // return to the pool
+let pool = Arc::new(PoolMutex::<Vec<u8>>::new());
+let val = pool.create_with(|| Vec::with_capacity(1024));
+drop(val);
+// return to the pool
 ```

@@ -72,6 +72,7 @@ impl<T: Clear> Drop for PoolObjectContainer<T> {
                     val.clear();
                     lock.push(val);
                 }
+                drop(lock);
             }
             PoolType::SegQueue(ref pool) => {
                 if pool.values.len() >= pool.max_size {
