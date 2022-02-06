@@ -59,7 +59,7 @@ impl<T: Clear + Default> Deref for PoolObjectContainer<T> {
 
 impl<T: Clear> Drop for PoolObjectContainer<T> {
     fn drop(&mut self) {
-        let val = unsafe { ptr::read(&self.inner as *const ManuallyDrop<T>) };
+        let val = unsafe { ptr::read(&self.inner) };
         let mut val = ManuallyDrop::into_inner(val);
 
         match self.ref_pool {
