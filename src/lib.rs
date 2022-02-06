@@ -30,8 +30,8 @@ enum PoolType<T: Clear> {
 
 #[derive(Debug)]
 pub struct PoolObjectContainer<T: Clear> {
-    inner: ManuallyDrop<T>,
     ref_pool: PoolType<T>,
+    inner: ManuallyDrop<T>,
 }
 
 impl<T: Clear> PoolObjectContainer<T> {
