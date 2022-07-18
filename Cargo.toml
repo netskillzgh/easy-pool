@@ -28,3 +28,6 @@ path = "easy_pool_proc_macro"
 
 [[example]]
 name = "simple"
+
+[[example]]
+name = "complex"
