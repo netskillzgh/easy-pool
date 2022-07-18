@@ -44,13 +44,13 @@ impl<T: Clear> PoolObjectContainer<T> {
     }
 }
 
-impl<T: Clear + Default> DerefMut for PoolObjectContainer<T> {
+impl<T: Clear> DerefMut for PoolObjectContainer<T> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
 
-impl<T: Clear + Default> Deref for PoolObjectContainer<T> {
+impl<T: Clear> Deref for PoolObjectContainer<T> {
     type Target = T;
 
     fn deref(&self) -> &Self::Target {

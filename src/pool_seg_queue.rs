@@ -10,10 +10,7 @@ pub struct PoolSegQueue<T> {
     pub(crate) max_size: usize,
 }
 
-impl<T> PoolSegQueue<T>
-where
-    T: Default + Clear,
-{
+impl<T: Clear> PoolSegQueue<T> {
     pub fn new(max_size: usize) -> Self {
         Self {
             values: SegQueue::new(),
@@ -21,9 +18,12 @@ where
         }
     }
 
-    // Create an object (default).
+    /// Create an object (default).
     #[inline]
-    pub fn create(self: &Arc<Self>) -> PoolObjectContainer<T> {
+    pub fn create(self: &Arc<Self>) -> PoolObjectContainer<T>
+    where
+        T: Clear + Default,
+    {
         self.create_with(|| Default::default())
     }
 
@@ -41,7 +41,7 @@ where
     }
 }
 
-impl<T: Default + Clear> Default for PoolSegQueue<T> {
+impl<T: Clear> Default for PoolSegQueue<T> {
     fn default() -> Self {
         Self::new(1024)
     }

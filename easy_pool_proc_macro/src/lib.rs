@@ -58,6 +58,9 @@ fn build(ident: Ident, vis: syn::Visibility, kind_pool: KindPool) -> proc_macro:
 
     let imp = quote::quote! {
         impl #ident {
+            /// Create an object.
+            /// The FnOnce that you pass as an argument does not affect the object if it is already present in memory.
+            /// It is interesting for example when creating a "vector" to specify a capacity.
             #vis fn create_with<F>(f: F) -> easy_pool::PoolObjectContainer<#ident>
            where
                F: FnOnce() -> #ident,
@@ -67,6 +70,7 @@ fn build(ident: Ident, vis: syn::Visibility, kind_pool: KindPool) -> proc_macro:
                pool
            }
 
+           /// Create an object (default).
            #vis fn create() -> easy_pool::PoolObjectContainer<#ident>
            {
                let pool = #name.create();

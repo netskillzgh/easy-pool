@@ -12,7 +12,7 @@ pub struct PoolArrayQueue<T> {
 
 impl<T> PoolArrayQueue<T>
 where
-    T: Default + Clear,
+    T: Clear,
 {
     pub fn new(capacity: usize) -> Self {
         Self {
@@ -23,7 +23,10 @@ where
 
     /// Create an object (default).
     #[inline]
-    pub fn create(self: &Arc<Self>) -> PoolObjectContainer<T> {
+    pub fn create(self: &Arc<Self>) -> PoolObjectContainer<T>
+    where
+        T: Clear + Default,
+    {
         self.create_with(|| Default::default())
     }
 
@@ -41,7 +44,7 @@ where
     }
 }
 
-impl<T: Default + Clear> Default for PoolArrayQueue<T> {
+impl<T: Clear> Default for PoolArrayQueue<T> {
     fn default() -> Self {
         Self::new(1024)
     }

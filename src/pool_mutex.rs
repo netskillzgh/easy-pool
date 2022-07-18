@@ -12,7 +12,7 @@ pub struct PoolMutex<T> {
 
 impl<T> PoolMutex<T>
 where
-    T: Default + Clear,
+    T: Clear,
 {
     pub fn new() -> Self {
         Self::with_config(0, 4096)
@@ -27,7 +27,10 @@ where
 
     // Create an object (default).
     #[inline]
-    pub fn create(self: &Arc<Self>) -> PoolObjectContainer<T> {
+    pub fn create(self: &Arc<Self>) -> PoolObjectContainer<T>
+    where
+        T: Clear + Default,
+    {
         self.create_with(|| Default::default())
     }
 
@@ -45,7 +48,7 @@ where
     }
 }
 
-impl<T: Default + Clear> Default for PoolMutex<T> {
+impl<T: Clear> Default for PoolMutex<T> {
     fn default() -> Self {
         Self::new()
     }
