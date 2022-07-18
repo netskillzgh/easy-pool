@@ -1,7 +1,6 @@
 use std::sync::Arc;
 
-use easy_pool::{Clear, PoolMutex};
-use easy_pool_proc_macro::EasyPoolMutex;
+use easy_pool::{Clear, EasyPoolMutex, PoolMutex};
 
 // It will create the pool and create the functions T::create_with & T::create.
 // This derive is optional but you have to create the pool yourself.
