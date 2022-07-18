@@ -9,6 +9,7 @@ use std::{
     sync::Arc,
 };
 
+pub use once_cell::sync::Lazy;
 pub use pool_array_queue::PoolArrayQueue;
 pub use pool_mutex::PoolMutex;
 pub use pool_seg_queue::PoolSegQueue;

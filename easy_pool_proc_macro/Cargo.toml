@@ -1,0 +1,13 @@
+[package]
+name = "easy_pool_proc_macro"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = "1.0.40"
+syn = {version = "1.0.98", features = ["full"]}
+quote = "1.0.20"
+darling = "0.14.1"

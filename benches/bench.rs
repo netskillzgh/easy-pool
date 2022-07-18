@@ -1,8 +1,20 @@
 use std::sync::Arc;
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use easy_pool::{PoolArrayQueue, PoolMutex, PoolSegQueue};
+use easy_pool::{Clear, PoolArrayQueue, PoolMutex, PoolSegQueue};
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
+
+struct Test {}
+
+impl Default for Test {
+    fn default() -> Self {
+        Test {}
+    }
+}
+
+impl Clear for Test {
+    fn clear(&mut self) {}
+}
 
 fn mutex(pool: Arc<PoolMutex<Vec<u8>>>) {
     (0..1024).into_par_iter().for_each(|_| {

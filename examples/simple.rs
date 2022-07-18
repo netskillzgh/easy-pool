@@ -1,15 +1,3 @@
-```toml
-[dependencies]
-easy-pool = "0.2.0"
-```
-
-An easy way to reuse your objects without reallocating memory every time.
-
-<hr>
-
-## Simple example
-
-```rust, no_run
 use std::sync::Arc;
 
 use easy_pool::{Clear, PoolMutex};
@@ -60,5 +48,3 @@ fn main() {
     });
     assert_eq!(result.age, 15);
 }
-// return to the pool
-```
