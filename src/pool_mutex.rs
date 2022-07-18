@@ -32,7 +32,7 @@ where
     }
 
     /// Create an object.
-    /// The function that you pass as an argument does not affect the object if it is already present in memory.
+    /// The FnOnce that you pass as an argument does not affect the object if it is already present in memory.
     /// It is interesting for example when creating a "vector" to specify a capacity.
     pub fn create_with<F: FnOnce() -> T>(self: &Arc<Self>, f: F) -> PoolObjectContainer<T> {
         let val = self.values.lock().pop().unwrap_or_else(f);
