@@ -49,6 +49,8 @@ fn main() {
     assert_eq!(test.age, 15);
     test.age = 10;
     assert_eq!(test.age, 10);
+    drop(test);
+    // The function create will reuse the old "test".
     let test = Test::create();
     assert_eq!(test.age, 0);
 
