@@ -73,3 +73,13 @@ fn main() {
     assert_eq!(result.pets.capacity(), 100);
 }
 ```
+
+<hr>
+
+Important points to know:
+
+1. The pool is fully thread safe.
+
+2. The create_with function will execute the FnOnce if no object is available in the pool. If an object is available, the pool will retrieve the object and execute the clear () function.
+
+3. The create () function will create the object with the default () function if no object is available in the pool. If an object is available, the pool will retrieve the object and execute the clear () function.
