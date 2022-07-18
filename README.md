@@ -17,7 +17,7 @@
 
 ```toml
 [dependencies]
-easy-pool = "0.2.5"
+easy-pool = "0.2.7"
 ```
 
 An easy way to reuse your objects without reallocating memory every time.
