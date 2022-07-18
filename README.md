@@ -1,6 +1,23 @@
+<div align="center">
+  <a href="https://crates.io/crates/easy-pool">
+    <img src="https://img.shields.io/crates/v/easy-pool.svg"
+    alt="Crates" />
+  </a>
+  <a href="https://docs.rs/easy-pool">
+    <img src="https://docs.rs/easy-pool/badge.svg"
+    alt="Documentation" />
+  </a>
+   <a href="https://github.com/netskillzgh/easy-pool#license">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg"
+    alt="License" />
+  </a>
+</div>
+
+<br />
+
 ```toml
 [dependencies]
-easy-pool = "0.2.0"
+easy-pool = "0.2.4"
 ```
 
 An easy way to reuse your objects without reallocating memory every time.
