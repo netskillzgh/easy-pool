@@ -33,7 +33,7 @@ use easy_pool::{Clear, PoolMutex};
 use easy_pool_proc_macro::EasyPoolMutex;
 
 // It will create the pool and create the functions T::create_with & T::create.
-// This derive is optional but you have to create the pool yourself.
+// The derive "EasyPoolMutex" is optional but you have to create the pool yourself.
 // Like this : let pool = Arc::new(PoolMutex::with_config(1024, 1024));.
 #[derive(EasyPoolMutex, Default)]
 struct Test {
